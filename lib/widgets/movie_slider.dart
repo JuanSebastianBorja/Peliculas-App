@@ -33,7 +33,7 @@ class MovieSlider extends StatelessWidget {
               itemCount: movies.length,
               itemBuilder: (_, int index) => _MoviePoster(movie: movies[index]),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -53,16 +53,13 @@ class _MoviePoster extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(
-              context,
-              'details',
-              arguments: movie,
-            ),
+            onTap: () =>
+                Navigator.pushNamed(context, 'details', arguments: movie),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(movie.fullPosterImg),
+                image: movie.posterImage,
                 width: 130,
                 height: 190,
                 fit: BoxFit.cover,
@@ -75,7 +72,7 @@ class _MoviePoster extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-          )
+          ),
         ],
       ),
     );

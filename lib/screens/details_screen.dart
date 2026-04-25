@@ -7,8 +7,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Movie movie =
-        ModalRoute.of(context)!.settings.arguments as Movie;
+    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
 
     return Scaffold(
       body: CustomScrollView(
@@ -20,7 +19,7 @@ class DetailScreen extends StatelessWidget {
               _Overview(movie: movie),
               CastingCards(movieId: movie.id),
             ]),
-          )
+          ),
         ],
       ),
     );
@@ -49,7 +48,7 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage(movie.fullBackdropPath),
+          image: movie.backdropImage,
           fit: BoxFit.cover,
         ),
       ),
@@ -73,7 +72,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadiusGeometry.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(movie.fullPosterImg),
+              image: movie.posterImage,
               height: 150,
             ),
           ),
@@ -98,15 +97,12 @@ class _PosterAndTitle extends StatelessWidget {
                   children: [
                     Icon(Icons.star_outline, size: 15, color: Colors.grey),
                     SizedBox(width: 5),
-                    Text(
-                      '${movie.voteAverage}',
-                      style: textTheme.bodyMedium,
-                    )
+                    Text('${movie.voteAverage}', style: textTheme.bodyMedium),
                   ],
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

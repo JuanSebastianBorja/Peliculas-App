@@ -41,6 +41,23 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Movie>> searchMovies(String query) async {
+    if (query.trim().isEmpty) return [];
+
+    final url = Uri.https(_baseUrl, '3/search/movie', {
+      'api_key': _apyKey,
+      'language': _language,
+      'page': '1',
+      'query': query,
+    });
+
+    final response = await http.get(url);
+    if (response.statusCode != 200) return [];
+
+    final searchResponse = PopularResponse.fromJson(response.body);
+    return searchResponse.results;
+  }
+
   Future<List<Cast>> getMovieCast(int movieId) async {
     if (movieCast.containsKey(movieId)) return movieCast[movieId]!;
 

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class Movie {
   Movie({
     required this.adult,
@@ -33,34 +35,58 @@ class Movie {
   double voteAverage;
   int voteCount;
 
+  String get fullPosterUrl {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500$posterPath';
+    }
+    return '';
+  }
+
+  ImageProvider get posterImage {
+    if (posterPath != null) {
+      return NetworkImage(fullPosterUrl);
+    }
+    return const AssetImage('assets/no-image.jpg');
+  }
+
+  String get fullBackdropUrl {
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500$backdropPath';
+    }
+    return '';
+  }
+
+  ImageProvider get backdropImage {
+    if (backdropPath != null) {
+      return NetworkImage(fullBackdropUrl);
+    }
+    return const AssetImage('assets/loading.gif');
+  }
+
   get fullPosterImg {
-    if (this.posterPath != null)
-      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
-    return 'https://www.google.com.co/url?sa=i&url=https%3A%2F%2Fwww.legrand.com.kh%2Fen%2Fcatalog%2Fproducts%2Fcircuit-breaker-dmx-sp-4000-4-poles-draw-out-version-and-electronic-protection-unit-670277&psig=AOvVaw3sJitbva3qSYvicMpdkDQK&ust=1738352748424000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOi47eKanosDFQAAAAAdAAAAABAE';
+    return fullPosterUrl;
   }
 
   get fullBackdropPath {
-    if (this.backdropPath != null)
-      return 'https://image.tmdb.org/t/p/w500${this.backdropPath}';
-    return 'https://www.google.com.co/url?sa=i&url=https%3A%2F%2Fwww.legrand.com.kh%2Fen%2Fcatalog%2Fproducts%2Fcircuit-breaker-dmx-sp-4000-4-poles-draw-out-version-and-electronic-protection-unit-670277&psig=AOvVaw3sJitbva3qSYvicMpdkDQK&ust=1738352748424000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOi47eKanosDFQAAAAAdAAAAABAE';
+    return fullBackdropUrl;
   }
 
   factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
   factory Movie.fromMap(Map<String, dynamic> json) => Movie(
-        adult: json["adult"],
-        backdropPath: json["backdrop_path"],
-        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
-        id: json["id"],
-        originalLanguage: json["original_language"],
-        originalTitle: json["original_title"],
-        overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
-        posterPath: json["poster_path"],
-        releaseDate: json["release_date"],
-        title: json["title"],
-        video: json["video"],
-        voteAverage: json["vote_average"].toDouble(),
-        voteCount: json["vote_count"],
-      );
+    adult: json["adult"],
+    backdropPath: json["backdrop_path"],
+    genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+    id: json["id"],
+    originalLanguage: json["original_language"],
+    originalTitle: json["original_title"],
+    overview: json["overview"],
+    popularity: json["popularity"].toDouble(),
+    posterPath: json["poster_path"],
+    releaseDate: json["release_date"],
+    title: json["title"],
+    video: json["video"],
+    voteAverage: json["vote_average"].toDouble(),
+    voteCount: json["vote_count"],
+  );
 }
